@@ -392,6 +392,188 @@ body::before{
 #modal-cta:hover{background:var(--accent2)}
 
 /* ========== SOCIAL BAR ========== */
+/* ========== CART ICON BTN ========== */
+#cart-fab{
+  position:fixed;bottom:28px;right:28px;z-index:500;
+  width:54px;height:54px;border-radius:50%;
+  background:var(--accent);color:#000;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(201,168,76,.4);
+  transition:var(--trans);
+}
+#cart-fab:hover{background:var(--accent2);transform:scale(1.08)}
+#cart-count{
+  position:absolute;top:-4px;right:-4px;
+  background:#e53e3e;color:#fff;
+  font-size:10px;font-weight:700;
+  width:18px;height:18px;border-radius:50%;
+  display:none;align-items:center;justify-content:center;
+}
+#cart-count.visible{display:flex}
+
+/* ========== QTY CONTROL ========== */
+.qty-control{
+  display:flex;align-items:center;gap:0;
+  border:1px solid var(--border2);
+  width:fit-content;
+}
+.qty-btn{
+  width:32px;height:32px;
+  background:var(--surface2);border:none;
+  color:var(--ink);font-size:18px;font-weight:300;
+  cursor:pointer;transition:var(--trans);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.qty-btn:hover{background:var(--accent);color:#000}
+.qty-num{
+  width:36px;height:32px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:600;color:var(--ink);
+  border-left:1px solid var(--border2);
+  border-right:1px solid var(--border2);
+  user-select:none;
+}
+.modal-actions{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.modal-qty-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.btn-add-cart{
+  flex:1;min-width:140px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 20px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--accent);color:#000;border:none;transition:var(--trans);cursor:pointer;
+}
+.btn-add-cart:hover{background:var(--accent2)}
+
+/* card qty row */
+.card-qty-row{
+  display:flex;align-items:center;gap:8px;
+  margin-top:10px;
+}
+.card-add-btn{
+  flex:1;
+  padding:9px 12px;font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  background:var(--accent);color:#000;border:none;cursor:pointer;transition:var(--trans);
+}
+.card-add-btn:hover{background:var(--accent2)}
+
+/* ========== CART PANEL ========== */
+#cart-overlay{
+  position:fixed;inset:0;z-index:700;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+#cart-overlay.open{opacity:1;pointer-events:all}
+#cart-panel{
+  position:absolute;top:0;right:0;bottom:0;
+  width:420px;max-width:100vw;
+  background:var(--surface);border-left:1px solid var(--border2);
+  display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+#cart-overlay.open #cart-panel{transform:translateX(0)}
+#cart-header{
+  padding:24px 24px 16px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+}
+#cart-header h2{font-family:var(--font-display);font-size:20px;color:var(--ink);letter-spacing:.08em}
+#cart-close-btn{
+  background:none;border:none;color:var(--ink3);
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:var(--trans);
+}
+#cart-close-btn:hover{color:var(--accent)}
+#cart-items{flex:1;overflow-y:auto;padding:16px 24px;display:flex;flex-direction:column;gap:14px;}
+#cart-empty{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;color:var(--ink3);text-align:center;padding:40px;
+}
+#cart-empty svg{opacity:.3}
+#cart-empty p{font-size:14px;line-height:1.6}
+.cart-item{
+  display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;
+  padding:12px 0;border-bottom:1px solid var(--border);
+}
+.cart-item-img{width:64px;height:64px;object-fit:cover;background:var(--surface2)}
+.cart-item-img-ph{width:64px;height:64px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--ink3)}
+.cart-item-info{min-width:0}
+.cart-item-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-price{font-size:12px;color:var(--accent);margin-bottom:6px}
+.cart-item-remove{font-size:10px;color:var(--ink3);background:none;border:none;cursor:pointer;padding:0;letter-spacing:.1em;text-transform:uppercase;transition:var(--trans)}
+.cart-item-remove:hover{color:#e53e3e}
+.cart-item-qty{display:flex;align-items:center;gap:0;border:1px solid var(--border2)}
+.cart-item-qty .qty-btn{width:26px;height:26px;font-size:14px}
+.cart-item-qty .qty-num{width:28px;height:26px;font-size:13px}
+#cart-footer{
+  padding:20px 24px 28px;border-top:1px solid var(--border);flex-shrink:0;
+}
+#cart-checkout-btn{
+  width:100%;padding:15px;
+  font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  background:var(--accent);color:#000;border:none;cursor:pointer;
+  transition:var(--trans);
+}
+#cart-checkout-btn:hover{background:var(--accent2)}
+
+/* ========== CHECKOUT MODAL ========== */
+#checkout-overlay{
+  position:fixed;inset:0;z-index:800;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+#checkout-overlay.open{opacity:1;pointer-events:all}
+#checkout-box{
+  background:var(--surface);border:1px solid var(--border2);
+  width:100%;max-width:500px;max-height:92vh;overflow-y:auto;
+  transform:scale(.97) translateY(10px);transition:transform .25s ease;
+  padding:36px 32px;
+}
+#checkout-overlay.open #checkout-box{transform:scale(1) translateY(0)}
+#checkout-box h2{font-family:var(--font-display);font-size:24px;color:var(--ink);margin-bottom:6px;letter-spacing:.06em}
+#checkout-box .co-sub{font-size:13px;color:var(--ink2);margin-bottom:28px}
+.co-field{margin-bottom:18px}
+.co-label{display:block;font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2);margin-bottom:7px}
+.co-label span{color:#e53e3e;margin-left:2px}
+.co-input,.co-select{
+  width:100%;padding:11px 14px;
+  background:var(--surface2);border:1px solid var(--border2);
+  color:var(--ink);font-size:14px;font-family:var(--font-body);
+  transition:var(--trans);outline:none;
+}
+.co-input:focus,.co-select:focus{border-color:var(--accent)}
+.co-select option{background:var(--surface2)}
+.co-pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.co-pay-opt{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 12px;border:1px solid var(--border2);cursor:pointer;
+  transition:var(--trans);background:var(--surface2);
+}
+.co-pay-opt:hover{border-color:var(--accent)}
+.co-pay-opt.selected{border-color:var(--accent);background:rgba(201,168,76,.08)}
+.co-pay-opt input{accent-color:var(--accent)}
+.co-pay-opt label{font-size:12px;color:var(--ink);cursor:pointer;user-select:none}
+.co-actions{display:flex;gap:12px;margin-top:28px}
+.co-btn-cancel{
+  flex:1;padding:13px;font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--border2);color:var(--ink2);cursor:pointer;transition:var(--trans);
+}
+.co-btn-cancel:hover{border-color:var(--ink2);color:var(--ink)}
+.co-btn-send{
+  flex:2;padding:13px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--accent);color:#000;border:none;cursor:pointer;transition:var(--trans);
+}
+.co-btn-send:hover{background:var(--accent2)}
+.co-order-summary{
+  background:var(--surface2);border:1px solid var(--border);
+  padding:14px 16px;margin-bottom:20px;
+}
+.co-order-summary h4{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.co-order-item{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);margin-bottom:5px}
+.co-order-item span:last-child{color:var(--ink);font-weight:600}
+
 #social-bar{
   border-top:1px solid var(--border);
   padding:40px;
@@ -818,6 +1000,62 @@ body::before{
   </div>
 </footer>
 
+<!-- CART FAB -->
+<button id="cart-fab" onclick="openCart()" aria-label="Carrito">
+  <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+  <span id="cart-count"></span>
+</button>
+
+<!-- CART PANEL -->
+<div id="cart-overlay" onclick="handleCartOverlayClick(event)">
+  <div id="cart-panel">
+    <div id="cart-header">
+      <h2>🛒 Tu Carrito</h2>
+      <button id="cart-close-btn" onclick="closeCart()">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="cart-items"></div>
+    <div id="cart-footer">
+      <button id="cart-checkout-btn" onclick="openCheckout()">CONCRETAR PEDIDO</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkout-overlay">
+  <div id="checkout-box">
+    <h2>Concretar Pedido</h2>
+    <p class="co-sub">Completa tus datos y te contactamos por WhatsApp.</p>
+    <div class="co-order-summary" id="co-summary"></div>
+    <div class="co-field">
+      <label class="co-label">Nombre<span>*</span></label>
+      <input class="co-input" id="co-name" placeholder="Tu nombre completo">
+    </div>
+    <div class="co-field">
+      <label class="co-label">Forma de pago<span>*</span></label>
+      <div class="co-pay-grid" id="co-pay-grid">
+        <div class="co-pay-opt" onclick="selectPay(this,'Efectivo USD')"><input type="radio" name="copay" readonly><label>Efectivo USD</label></div>
+        <div class="co-pay-opt" onclick="selectPay(this,'Efectivo CUP')"><input type="radio" name="copay" readonly><label>Efectivo CUP</label></div>
+        <div class="co-pay-opt" onclick="selectPay(this,'Transferencia')"><input type="radio" name="copay" readonly><label>Transferencia</label></div>
+        <div class="co-pay-opt" onclick="selectPay(this,'Zelle / PayPal')"><input type="radio" name="copay" readonly><label>Zelle / PayPal</label></div>
+      </div>
+    </div>
+    <div class="co-field">
+      <label class="co-label">Mensajería <em style="font-style:normal;opacity:.6">(opcional)</em></label>
+      <input class="co-input" id="co-courier" placeholder="Ej: Tito Express, envío propio...">
+    </div>
+    <div class="co-field">
+      <label class="co-label">Dirección <em style="font-style:normal;opacity:.6">(opcional)</em></label>
+      <input class="co-input" id="co-address" placeholder="Tu dirección de entrega">
+    </div>
+    <div class="co-actions">
+      <button class="co-btn-cancel" onclick="closeCheckout()">CANCELAR</button>
+      <button class="co-btn-send" onclick="sendOrder()">📲 ENVIAR PEDIDO</button>
+    </div>
+  </div>
+</div>
+
 <!-- PRODUCT MODAL -->
 <div id="modal-overlay">
   <div id="modal-box">
@@ -831,7 +1069,19 @@ body::before{
       <div class="modal-divider"></div>
       <p class="modal-desc" id="modal-desc-txt"></p>
       <div class="modal-price" id="modal-price-txt"></div>
-      <a id="modal-cta" href="#" target="_blank"></a>
+      <div class="modal-actions">
+        <div class="modal-qty-row">
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeModalQty(-1)">−</button>
+            <div class="qty-num" id="modal-qty-num">1</div>
+            <button class="qty-btn" onclick="changeModalQty(1)">+</button>
+          </div>
+          <button class="btn-add-cart" onclick="addToCartFromModal()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            AGREGAR
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1453,7 +1703,7 @@ const STORE_DATA = {
       price: '4500.00',
       currency: 'CUP',
       category: 'TECNOLOGÍA, NUEVA COLECCIÓN',
-      images: 'https://harcheez.pk/wp-content/uploads/2023/02/H884202f7a94142ebb191b458b1da64a1v-scaled.jpg | https://harcheez.pk/wp-content/uploads/2023/02/ZQS1202-outdoor-subwoofer-reverberation-LED-bluetooth-speaker-portable-high-power-wireless-speaker-home-FM-radio-car.jpg | https://img.lazcdn.com/g/p/e9c17bee23bc384daad07bc45f3358db.jpg_720x720q80.jpg',
+      images: 'https://harcheez.pk/wp-content/uploads/2023/02/H884202f7a94142ebb191b458b1da64a1v-scaled.jpg|https://harcheez.pk/wp-content/uploads/2023/02/ZQS1202-outdoor-subwoofer-reverberation-LED-bluetooth-speaker-portable-high-power-wireless-speaker-home-FM-radio-car.jpg https://s.alicdn.com/@sc04/kf/H9976e54d5eb94f0c94581604aa55ae0er.jpg_80x80.jpg',
       visible: 'true',
       order: '10'
     },
@@ -1849,6 +2099,14 @@ function renderProductsGrid(){
         <div class="card-footer">
           ${p.price?`<div class="card-price">${esc(p.currency||S.settings.currency||'USD')} ${esc(p.price)}</div>`:'<div></div>'}
         </div>
+        <div class="card-qty-row" onclick="event.stopPropagation()">
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeCardQty('${p.id}',-1)">−</button>
+            <div class="qty-num" id="card-qty-${p.id}">1</div>
+            <button class="qty-btn" onclick="changeCardQty('${p.id}',1)">+</button>
+          </div>
+          <button class="card-add-btn" onclick="addToCartFromCard('${p.id}')">AGREGAR</button>
+        </div>
       </div>
     </article>`;
   }).join('');
@@ -1860,6 +2118,8 @@ function renderProductsGrid(){
    ============================================================ */
 function openModal(id){
   const p=S.products.find(x=>x.id===id);if(!p)return;
+  currentModalProductId = id;
+  document.getElementById('modal-qty-num').textContent = '1';
   const cat=S.categories.find(c=>c.id===p.categoryId);
   document.getElementById('modal-cat-txt').textContent=cat?cat.name:'';
   document.getElementById('modal-name-txt').textContent=p.name;
@@ -2208,8 +2468,186 @@ function getHeroBgImages(){
 }
 
 /* ============================================================
-   CONFIRM DELETE
+   CART SYSTEM
    ============================================================ */
+let cart = []; // [{id, name, price, currency, qty, img}]
+let currentModalProductId = null;
+let selectedPayment = '';
+
+function cartTotal(){return cart.reduce((s,i)=>s+i.qty,0);}
+
+function updateCartBadge(){
+  const count = cartTotal();
+  const badge = document.getElementById('cart-count');
+  badge.textContent = count;
+  if(count>0) badge.classList.add('visible');
+  else badge.classList.remove('visible');
+}
+
+function addToCart(productId, qty){
+  const p = S.products.find(x=>x.id===productId); if(!p) return;
+  const imgs = getProductImages(p);
+  const existing = cart.find(i=>i.id===productId);
+  if(existing){ existing.qty += qty; }
+  else {
+    cart.push({
+      id: p.id, name: p.name,
+      price: p.price, currency: p.currency||S.settings.currency||'USD',
+      qty: qty, img: imgs[0]||''
+    });
+  }
+  updateCartBadge();
+  renderCartItems();
+  toast(`${p.name} agregado al carrito`, 'ok');
+}
+
+/* Modal qty */
+function changeModalQty(delta){
+  const el = document.getElementById('modal-qty-num');
+  let v = parseInt(el.textContent)||1;
+  v = Math.max(1, v+delta);
+  el.textContent = v;
+}
+function addToCartFromModal(){
+  if(!currentModalProductId) return;
+  const qty = parseInt(document.getElementById('modal-qty-num').textContent)||1;
+  addToCart(currentModalProductId, qty);
+  document.getElementById('modal-qty-num').textContent = 1;
+  closeModal();
+}
+
+/* Card qty */
+function changeCardQty(id, delta){
+  const el = document.getElementById('card-qty-'+id); if(!el) return;
+  let v = parseInt(el.textContent)||1;
+  v = Math.max(1, v+delta);
+  el.textContent = v;
+}
+function addToCartFromCard(id){
+  const el = document.getElementById('card-qty-'+id);
+  const qty = el ? parseInt(el.textContent)||1 : 1;
+  addToCart(id, qty);
+  if(el) el.textContent = 1;
+}
+
+/* Cart panel */
+function openCart(){
+  renderCartItems();
+  document.getElementById('cart-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCart(){
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleCartOverlayClick(e){
+  if(e.target===document.getElementById('cart-overlay')) closeCart();
+}
+
+function renderCartItems(){
+  const container = document.getElementById('cart-items');
+  const footer = document.getElementById('cart-footer');
+  if(!cart.length){
+    container.innerHTML=`<div id="cart-empty">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <p>Tu carrito está vacío.<br>¡Agrega productos para comenzar!</p>
+    </div>`;
+    footer.style.display='none';
+    return;
+  }
+  footer.style.display='block';
+  container.innerHTML = cart.map((item,idx)=>`
+    <div class="cart-item">
+      ${item.img
+        ? `<img class="cart-item-img" src="${esc(item.img)}" alt="${esc(item.name)}">`
+        : `<div class="cart-item-img-ph"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M21 15l-5-5L5 21"/></svg></div>`
+      }
+      <div class="cart-item-info">
+        <div class="cart-item-name">${esc(item.name)}</div>
+        <div class="cart-item-price">${esc(item.currency)} ${esc(item.price)}</div>
+        <button class="cart-item-remove" onclick="removeCartItem(${idx})">✕ Eliminar</button>
+      </div>
+      <div class="cart-item-qty">
+        <button class="qty-btn" onclick="changeCartItemQty(${idx},-1)">−</button>
+        <div class="qty-num">${item.qty}</div>
+        <button class="qty-btn" onclick="changeCartItemQty(${idx},1)">+</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function changeCartItemQty(idx, delta){
+  cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+  updateCartBadge();
+  renderCartItems();
+}
+function removeCartItem(idx){
+  cart.splice(idx,1);
+  updateCartBadge();
+  renderCartItems();
+}
+
+/* Checkout */
+function openCheckout(){
+  if(!cart.length){toast('El carrito está vacío','err');return;}
+  selectedPayment='';
+  document.querySelectorAll('.co-pay-opt').forEach(o=>o.classList.remove('selected'));
+  document.getElementById('co-name').value='';
+  document.getElementById('co-courier').value='';
+  document.getElementById('co-address').value='';
+  // Build order summary
+  const sum = document.getElementById('co-summary');
+  sum.innerHTML = `<h4>Resumen del pedido</h4>`
+    + cart.map(i=>`<div class="co-order-item"><span>${esc(i.name)} x${i.qty}</span><span>${esc(i.currency)} ${esc(i.price)}</span></div>`).join('');
+  closeCart();
+  document.getElementById('checkout-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCheckout(){
+  document.getElementById('checkout-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function selectPay(el, value){
+  selectedPayment = value;
+  document.querySelectorAll('.co-pay-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function sendOrder(){
+  const name = document.getElementById('co-name').value.trim();
+  if(!name){toast('Por favor ingresa tu nombre','err');document.getElementById('co-name').focus();return;}
+  if(!selectedPayment){toast('Por favor selecciona una forma de pago','err');return;}
+  const courier = document.getElementById('co-courier').value.trim();
+  const address = document.getElementById('co-address').value.trim();
+  let msg = `🛍️ *NUEVO PEDIDO - PHANTOM STORE*\n\n`;
+  msg += `👤 *Nombre:* ${name}\n`;
+  msg += `💳 *Forma de pago:* ${selectedPayment}\n`;
+  if(courier) msg += `🚚 *Mensajería:* ${courier}\n`;
+  if(address) msg += `📍 *Dirección:* ${address}\n`;
+  msg += `\n📦 *Productos:*\n`;
+  cart.forEach(i=>{ msg += `• ${i.name} x${i.qty} — ${i.currency} ${i.price}\n`; });
+  msg += `\n_Pedido realizado desde Phantom Store_`;
+  const waUrl = `https://wa.link/jne4rw`;
+  const waMsg = `https://api.whatsapp.com/send?phone=53${waUrl.split('jne4rw')[0]}&text=${encodeURIComponent(msg)}`;
+  // Use the configured WA link directly, appending message via api
+  const ctaUrl = S.settings.cta?.url || 'https://wa.link/jne4rw';
+  // Extract phone from wa.link or wa.me
+  let finalUrl;
+  if(ctaUrl.includes('wa.me/') || ctaUrl.includes('api.whatsapp.com')){
+    const phone = ctaUrl.replace(/.*wa\.me\//,'').replace(/\?.*/,'');
+    finalUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`;
+  } else {
+    // wa.link shortlink — open separately with message as reference
+    finalUrl = `${ctaUrl}?text=${encodeURIComponent(msg)}`;
+  }
+  window.open(finalUrl,'_blank');
+  // Clear cart after sending
+  cart=[];
+  updateCartBadge();
+  closeCheckout();
+  toast('¡Pedido enviado! Te contactaremos pronto 🎉','ok');
+}
+
+
 function confirmDelete(type,id){
   pendingConfirm={type,id};
   document.getElementById('confirm-title').textContent='Confirmar eliminación';
