@@ -2720,20 +2720,8 @@ function sendOrder(){
   });
   msg += `\n_Pedido realizado desde Phantom Store_ 👻`;
 
-  // Send to WhatsApp — use api.whatsapp.com with the number extracted from wa.link
-  // wa.link/jne4rw → we open it with the text param directly
-  const waPhone = '53'; // Cuba prefix fallback
-  const ctaUrl = S.settings.cta?.url || 'https://wa.link/jne4rw';
-  let finalUrl;
-  if(ctaUrl.includes('wa.me/')){
-    const phone = ctaUrl.replace(/.*wa\.me\//,'').replace(/\?.*/,'');
-    finalUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`;
-  } else if(ctaUrl.includes('api.whatsapp.com')){
-    finalUrl = ctaUrl.split('?')[0] + `?text=${encodeURIComponent(msg)}`;
-  } else {
-    // wa.link shortlink — append text param (works on mobile WhatsApp)
-    finalUrl = `${ctaUrl}?text=${encodeURIComponent(msg)}`;
-  }
+  // Send to WhatsApp directly with phone number (wa.link doesn't support ?text param)
+  const finalUrl = `https://api.whatsapp.com/send?phone=5353573664&text=${encodeURIComponent(msg)}`;
 
   window.open(finalUrl, '_blank');
   cart = [];
