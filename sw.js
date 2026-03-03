@@ -1,0 +1,48 @@
+const CACHE_NAME = 'phantom-store-v9';
+const ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+];
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(ASSETS).catch(err => {
+        console.warn('Cache partial fail:', err);
+      });
+    })
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => {
+        console.log('Deleting old cache:', k);
+        return caches.delete(k);
+      }))
+    )
+  );
+  self.clients.claim();
+});
+
+// Network first — siempre intenta la red antes del caché
+self.addEventListener('fetch', e => {
+  if(e.request.method !== 'GET') return;
+  const url = new URL(e.request.url);
+  if(url.origin !== self.location.origin) return;
+
+  e.respondWith(
+    fetch(e.request, { cache: 'no-cache' })
+      .then(res => {
+        const clone = res.clone();
+        caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+        return res;
+      })
+      .catch(() => caches.match(e.request))
+  );
+});
